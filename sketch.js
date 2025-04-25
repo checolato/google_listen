@@ -1,8 +1,15 @@
 let baseImg, rainbowImg;
 
 function preload() {
-  baseImg    = loadImage('asset/schoolgirl.png');
-  rainbowImg = loadImage('asset/rainbow.png');
+  console.log('preload() start');
+  baseImg = loadImage('asset/schoolgirl.png',
+    () => console.log('✔ baseImg loaded'),
+    e => console.error('✖ baseImg failed:', e)
+  );
+  rainbowImg = loadImage('asset/rainbow.png',
+    () => console.log('✔ rainbowImg loaded'),
+    e => console.error('✖ rainbowImg failed:', e)
+  );
 }
 
 function setup() {
@@ -16,12 +23,12 @@ function windowResized() {
 }
 
 function draw() {
-  // do NOT clear the background – we want a “brush” trail
+  // no background();  // keep trails
   if (mouseIsPressed) {
     image(rainbowImg, mouseX, mouseY, 100, 100);
   } else {
-    tint(255, 127);            // make the school-girl semi-transparent
-    image(baseImg, mouseX, mouseY, 100, 100);
+    tint(255, 127);
+    image(baseImg,   mouseX, mouseY, 100, 100);
     noTint();
   }
 }
